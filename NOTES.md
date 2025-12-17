@@ -1,3 +1,5 @@
+small note: Used npm instead of pnpm as my current version is older so did not want to mess my company project.
+
 1. **DefaultLayout**
 
 - Removed logic for Navigation via window.location.href and applied SPA behaviour. Because it was causing full pag reload and was losing router state
