@@ -16,3 +16,9 @@ small note: Used npm instead of pnpm as my current version is older so did not w
 - I removed inline options object. Because it was causing rerender as it were recreating object each time. So i moved it outside component so it sees this array as unchanged array as its outside React component and memory reference is not changing
 
 - I deducted fetch logic to separate hook with Types added and applied error handling and different API states (isloading etc.)  The better approach for bigger project is to use React-query so we get caching behaviour for API fetching.
+
+3. **Folder**
+
+- adjusted types and removed unnecessary useffect and state as we were getting data from props
+
+- no need to accept gridView and tableView from parent, i just imported inside Folder component.

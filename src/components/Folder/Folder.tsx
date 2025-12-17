@@ -1,49 +1,42 @@
-import { Paper, Stack, Tabs } from "@mantine/core";
-import { useEffect, useState, type FC } from "react";
-import { FolderNavigation } from "./FolderNavigation";
+import { Paper, Stack, Tabs } from '@mantine/core';
+import { useState, type FC } from 'react';
+import { FolderNavigation } from './FolderNavigation';
+import type { File } from '~/hooks';
+import { GridView, TableView } from './View';
 
-type Item = {
-  id: number;
-  name: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
+export type FolderOption = {
+  label: string;
+  onClick: (item: File) => void;
 };
 
-export const Folder = (props: {
-  data: Array<Item>;
+interface IProps {
+  data: File[];
   navTitle: string;
-  gridView: FC<any>;
-  tableView: FC<any>;
-  options?: Array<{ label: string; onClick: Function }>;
-}) => {
-  const [data, setData] = useState<any>();
-  const [activeTab, setActiveTab] = useState("grid");
+  options?: FolderOption[];
+}
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
+export const Folder = ({ data, navTitle, options }: IProps) => {
+  const [activeTab, setActiveTab] = useState('grid');
 
-  let ViewComponent: any;
-  if (activeTab === "grid") {
-    ViewComponent = props.gridView;
-  } else {
-    ViewComponent = props.tableView;
-  }
+  const ViewComponent = activeTab === 'grid' ? GridView : TableView;
 
   return (
-    <Paper p="md" style={{ margin: 20 }}>
-      <FolderNavigation title={props.navTitle} />
+    <Paper p='md' style={{ margin: 20 }}>
+      <FolderNavigation title={navTitle} />
 
-      <Tabs value={activeTab} onChange={(val) => setActiveTab(val as any)} style={{ marginTop: 20, marginBottom: 20 }}>
+      <Tabs
+        value={activeTab}
+        onChange={val => setActiveTab(val as any)}
+        style={{ marginTop: 20, marginBottom: 20 }}
+      >
         <Tabs.List>
-          <Tabs.Tab value="grid">Grid View</Tabs.Tab>
-          <Tabs.Tab value="table">Table View</Tabs.Tab>
+          <Tabs.Tab value='grid'>Grid View</Tabs.Tab>
+          <Tabs.Tab value='table'>Table View</Tabs.Tab>
         </Tabs.List>
       </Tabs>
 
       <Stack>
-        <ViewComponent items={data} options={props.options} />
+        <ViewComponent items={data} options={options} />
       </Stack>
     </Paper>
   );

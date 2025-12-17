@@ -1,5 +1,4 @@
 import { Folder } from '~/components';
-import { GridView, TableView } from '~/components/Folder/View/';
 import { useFiles } from '~/hooks';
 
 const options = [
@@ -20,8 +19,6 @@ const options = [
 export const Homepage = () => {
   const { data, isLoading, error } = useFiles();
 
-  console.log("RERENDERS")
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -30,13 +27,5 @@ export const Homepage = () => {
     return <div>{error}</div>;
   }
 
-  return (
-    <Folder
-      navTitle='Homepage'
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      options={options}
-    />
-  );
+  return <Folder navTitle='Homepage' data={data} options={options} />;
 };
