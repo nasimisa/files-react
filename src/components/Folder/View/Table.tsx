@@ -1,25 +1,18 @@
-import { Table } from "@mantine/core";
-import { FolderActions } from "../FolderActions";
+import { Table } from '@mantine/core';
+import { FolderActions } from '../FolderActions';
+import type { File } from '~/hooks';
+import { formatDate } from '~/helpers';
 
-export const TableView = ({ items, options }) => {
-  const rows = items.map((item) => (
-    <Table.Tr key={item.id}>
-      <Table.Td>{item.id}</Table.Td>
-      <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.type}</Table.Td>
+export const TableView = ({ items }: { items: File[] }) => {
+  const rows = items?.map(item => (
+    <Table.Tr key={item?.id}>
+      <Table.Td>{item?.id}</Table.Td>
+      <Table.Td>{item?.name}</Table.Td>
+      <Table.Td>{item?.type}</Table.Td>
+      <Table.Td>{formatDate(item?.createdAt)}</Table.Td>
+      <Table.Td>{formatDate(item?.updatedAt)}</Table.Td>
       <Table.Td>
-        {new Date(item.updatedAt).toLocaleDateString("en-US")} at{" "}
-        {new Date(item.updatedAt).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        })}
-      </Table.Td>
-      <Table.Td>{item.updatedAt}</Table.Td>
-      <Table.Td>
-        <Table.Td>
-          <FolderActions item={item} options={options} />
-        </Table.Td>
+        <FolderActions item={item} />
       </Table.Td>
     </Table.Tr>
   ));

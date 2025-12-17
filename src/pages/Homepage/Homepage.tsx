@@ -1,46 +1,16 @@
-import { useEffect, useState } from "react";
-import { Folder } from "~/components";
-import { GridView, TableView } from "~/components/Folder/View/";
+import { Folder } from '~/components';
+import { useFilesContext } from '~/context/FilesContext';
 
 export const Homepage = () => {
-  const [data, setData] = useState([]);
+  const { items, isLoading, error } = useFilesContext();
 
-  useEffect(() => {
-    fetch("/items.json")
-      .then((res) => {
-        return res.json();
-      })
-      .then((result) => {
-        setData(result.items);
-      });
-  }, [{}]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <Folder
-      navTitle="Homepage"
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      options={[
-        {
-          label: "Mark as Favorite",
-          onClick() {
-            alert("Marked as Favorite");
-          },
-        },
-        {
-          label: "Share",
-          onClick() {
-            alert("Shared");
-          },
-        },
-        {
-          label: "Delete",
-          onClick() {
-            alert("Deleted");
-          },
-        },
-      ]}
-    />
-  );
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return <Folder navTitle='Homepage' data={items} />;
 };

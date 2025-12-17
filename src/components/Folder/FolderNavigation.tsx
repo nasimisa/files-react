@@ -1,10 +1,9 @@
-import { Breadcrumbs, Anchor } from "@mantine/core";
-import styles from "./FolderNavigation.module.scss";
+import { Breadcrumbs, Anchor } from '@mantine/core';
 
 export const FolderNavigation = (props: { title: string }) => {
   return (
     <Breadcrumbs>
-      <Anchor underline="never" size="xl" className={styles.nav}>
+      <Anchor underline='never' size='xl' p={20}>
         {props.title}
       </Anchor>
     </Breadcrumbs>
