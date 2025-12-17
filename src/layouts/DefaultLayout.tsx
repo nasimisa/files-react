@@ -1,8 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, useLocation, Outlet } from 'react-router-dom';
+import { Button, Paper, Stack } from '@mantine/core';
 
-import { Button, Paper, Stack } from "@mantine/core";
+const NAV_ITEMS = [
+  { label: 'Homepage', path: '/' },
+  { label: 'Favorites', path: '/favorites' },
+];
 
 export const Sidebar = () => {
+  const location = useLocation();
+
   return (
     <Paper
       withBorder
@@ -14,19 +20,15 @@ export const Sidebar = () => {
       }}
     >
       <Stack>
-        <Button
-          onClick={() => (window.location.href = "/")}
-          variant={window.location.pathname === "/" ? "filled" : "default"}
-        >
-          Homepage
-        </Button>
+        {NAV_ITEMS.map(({ label, path }) => {
+          const isActive = location.pathname === path;
 
-        <Button
-          onClick={() => (window.location.href = "/favorites")}
-          variant={window.location.pathname === "/favorites" ? "filled" : "default"}
-        >
-          Favorites
-        </Button>
+          return (
+            <Button component={NavLink} to={path} variant={isActive ? 'filled' : 'default'}>
+              {label}
+            </Button>
+          );
+        })}
       </Stack>
     </Paper>
   );
@@ -36,10 +38,10 @@ export const DefaultLayout = () => {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        height: "100vh",
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        height: '100vh',
       }}
     >
       <Sidebar />
