@@ -1,16 +1,29 @@
 import { ActionIcon, Paper, Text } from '@mantine/core';
 import { IconDots } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
+import { useFilesContext } from '~/context/FilesContext';
 import type { File } from '~/hooks';
 
 interface IProps {
   item: File;
-  options: { label: string; onClick: (item: File) => void }[];
 }
 
-export const FolderActions = ({ item, options = [] }: IProps) => {
+export const FolderActions = ({ item }: IProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const { addFavorite, removeFavorite, isFavorite } = useFilesContext();
+
+  const fav = isFavorite(item.id);
+
+  const options = [
+    {
+      label: fav ? 'Remove from Favorites' : 'Mark as Favorite',
+      onClick: (it: File) => (fav ? removeFavorite(it.id) : addFavorite(it)),
+    },
+    { label: 'Share', onClick: () => alert('Shared') },
+    { label: 'Delete', onClick: () => alert('Deleted') },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

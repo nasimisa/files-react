@@ -1,8 +1,8 @@
 import { Folder } from '~/components';
-import { useFiles } from '~/hooks';
+import { useFilesContext } from '~/context/FilesContext';
 
 export const Homepage = () => {
-  const { data, isLoading, error } = useFiles();
+  const { items, isLoading, error } = useFilesContext();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -12,5 +12,5 @@ export const Homepage = () => {
     return <div>{error}</div>;
   }
 
-  return <Folder navTitle='Homepage' data={data} />;
+  return <Folder navTitle='Homepage' data={items} />;
 };

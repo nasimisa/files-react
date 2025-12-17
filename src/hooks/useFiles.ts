@@ -24,8 +24,6 @@ export const useFiles = (): UseFilesResult => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-
     setIsLoading(true);
 
     fetch('/items.json')
@@ -36,25 +34,15 @@ export const useFiles = (): UseFilesResult => {
         return res.json();
       })
       .then((result: FilesResponse) => {
-        if (isMounted) {
-          setData(result.items);
-          setError(null);
-        }
+        setData(result.items);
+        setError(null);
       })
       .catch(() => {
-        if (isMounted) {
-          setError('Something went wrong while loading items');
-        }
+        setError('Something went wrong while loading items');
       })
       .finally(() => {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       });
-
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   return {

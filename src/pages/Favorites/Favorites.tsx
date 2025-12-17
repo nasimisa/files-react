@@ -1,52 +1,16 @@
-import { useEffect, useState } from "react";
-import { Folder } from "~/components";
-import { GridView, TableView } from "~/components/Folder/View";
+import { Folder } from '~/components';
+import { useFilesContext } from '~/context/FilesContext';
 
 export const Favorites = () => {
-  const [data, setData] = useState([]);
+  const { favorites, isLoading, error } = useFilesContext();
 
-  useEffect(() => {
-    fetch("/items.json")
-      .then((res) => {
-        return res.json();
-      })
-      .then((result) => {
-        setData(result.items);
-      });
-  }, [{}]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <Folder
-      navTitle="Favorites"
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      options={[
-        {
-          label: "Remove from Favorites",
-          onClick(item: any) {
-            alert(`${item.name} removed from Favorites`);
-          },
-        },
-        {
-          label: "Open item location",
-          onClick() {
-            alert("Opened");
-          },
-        },
-        {
-          label: "Share",
-          onClick() {
-            alert("Shared");
-          },
-        },
-        {
-          label: "Delete",
-          onClick(item: unknown) {
-            alert("Deleted");
-          },
-        },
-      ]}
-    />
-  );
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return <Folder navTitle='Favorites' data={favorites} />;
 };

@@ -1,7 +1,6 @@
 import { Card, Text, SimpleGrid, Group, Badge } from '@mantine/core';
 import { FolderActions } from '../FolderActions';
 import type { File } from '~/hooks';
-import { options } from '../data';
 import { formatDate } from '~/helpers';
 
 export const GridView = ({ items }: { items: File[] }) => (
@@ -24,7 +23,7 @@ export const GridView = ({ items }: { items: File[] }) => (
             </Badge>
           </Group>
 
-          <FolderActions item={item} options={options} />
+          <FolderActions item={item} />
         </Group>
 
         <Text size='sm' c='dimmed'>

@@ -22,7 +22,7 @@ small note: Used npm instead of pnpm as my current version is older so did not w
 
 - no need to accept gridView and tableView from parent, i just imported inside Folder component.
 
-- then i noticed that there is no need to use options and pass it as props from HomePage to Folder then to Views. so instead i just used in gridview and tableview.
+- then i noticed that there is no need to use options and pass it as props from HomePage to Folder then to Views. so instead i just used in gridview and tableview (later when I implemented favorites,i moved it to context)
 
 - removed unnecessary scss files from Folder folder.
 
@@ -43,3 +43,22 @@ small note: Used npm instead of pnpm as my current version is older so did not w
 5. **FolderActions**
 
 - for FolderActions I fixed a memory leak caused by an effect without dependencies and ensured the event listener is properly cleaned up.
+
+6. **Favorites page**
+
+- did the same things as for HomePage
+
+- applied favorites logic in context as both pages depend on same data changes
+
+
+
+**What can be improved**
+
+- I think instead of sidebar we can put navigation on top
+- we can make cards clickable and show folder details
+- for folder navigation we can implement breadcrumb e.g. Homepage/folder1
+- add success and error modals
+- add pagination (but backend needs to support it)
+- add filter
+- in home page we can make items which are favourites as different color or with star icon.
+- add empty states

@@ -1,7 +1,6 @@
 import { Table } from '@mantine/core';
 import { FolderActions } from '../FolderActions';
 import type { File } from '~/hooks';
-import { options } from '../data';
 import { formatDate } from '~/helpers';
 
 export const TableView = ({ items }: { items: File[] }) => {
@@ -13,7 +12,7 @@ export const TableView = ({ items }: { items: File[] }) => {
       <Table.Td>{formatDate(item?.createdAt)}</Table.Td>
       <Table.Td>{formatDate(item?.updatedAt)}</Table.Td>
       <Table.Td>
-        <FolderActions item={item} options={options} />
+        <FolderActions item={item} />
       </Table.Td>
     </Table.Tr>
   ));
