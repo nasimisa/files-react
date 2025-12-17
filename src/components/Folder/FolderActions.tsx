@@ -1,13 +1,19 @@
-import { ActionIcon, Paper, Text } from "@mantine/core";
-import { IconDots } from "@tabler/icons-react";
-import { useEffect, useRef, useState } from "react";
+import { ActionIcon, Paper, Text } from '@mantine/core';
+import { IconDots } from '@tabler/icons-react';
+import { useEffect, useRef, useState } from 'react';
+import type { File } from '~/hooks';
 
-export const FolderActions = (props: any) => {
+interface IProps {
+  item: File;
+  options: { label: string; onClick: (item: File) => void }[];
+}
+
+export const FolderActions = ({ item, options }: IProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    document.addEventListener("click", (e: any) => {
+    document.addEventListener('click', (e: any) => {
       if (ref.current && !(ref.current as any).contains(e.target)) {
         setOpen(false);
       }
@@ -18,12 +24,12 @@ export const FolderActions = (props: any) => {
     <div
       ref={ref}
       style={{
-        position: "relative",
-        display: "inline-block",
+        position: 'relative',
+        display: 'inline-block',
       }}
     >
       <ActionIcon
-        variant="transparent"
+        variant='transparent'
         onClick={() => {
           setOpen(!open);
         }}
@@ -34,28 +40,28 @@ export const FolderActions = (props: any) => {
       {open ? (
         <Paper
           withBorder
-          shadow="md"
-          p="xs"
+          shadow='md'
+          p='xs'
           style={{
-            position: "absolute",
+            position: 'absolute',
             right: 0,
             minWidth: 180,
-            top: "100%",
+            top: '100%',
             zIndex: 999999,
-            background: "white",
+            background: 'white',
           }}
         >
-          {props.options.map((option: any, index: number) => {
+          {options.map((option: any, index: number) => {
             return (
               <Text
                 key={index}
-                size="sm"
+                size='sm'
                 style={{
-                  cursor: "pointer",
+                  cursor: 'pointer',
                   padding: 4,
                 }}
                 onClick={() => {
-                  option.onClick(props.item);
+                  option.onClick(item);
                   setOpen(false);
                 }}
               >

@@ -1,21 +1,15 @@
 import { Paper, Stack, Tabs } from '@mantine/core';
-import { useState, type FC } from 'react';
+import { useState } from 'react';
 import { FolderNavigation } from './FolderNavigation';
 import type { File } from '~/hooks';
 import { GridView, TableView } from './View';
 
-export type FolderOption = {
-  label: string;
-  onClick: (item: File) => void;
-};
-
 interface IProps {
   data: File[];
   navTitle: string;
-  options?: FolderOption[];
 }
 
-export const Folder = ({ data, navTitle, options }: IProps) => {
+export const Folder = ({ data, navTitle }: IProps) => {
   const [activeTab, setActiveTab] = useState('grid');
 
   const ViewComponent = activeTab === 'grid' ? GridView : TableView;
@@ -36,7 +30,7 @@ export const Folder = ({ data, navTitle, options }: IProps) => {
       </Tabs>
 
       <Stack>
-        <ViewComponent items={data} options={options} />
+        <ViewComponent items={data} />
       </Stack>
     </Paper>
   );
