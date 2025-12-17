@@ -8,17 +8,23 @@ interface IProps {
   options: { label: string; onClick: (item: File) => void }[];
 }
 
-export const FolderActions = ({ item, options }: IProps) => {
+export const FolderActions = ({ item, options = [] }: IProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    document.addEventListener('click', (e: any) => {
-      if (ref.current && !(ref.current as any).contains(e.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         setOpen(false);
       }
-    });
-  });
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div
@@ -30,14 +36,13 @@ export const FolderActions = ({ item, options }: IProps) => {
     >
       <ActionIcon
         variant='transparent'
-        onClick={() => {
-          setOpen(!open);
-        }}
+        onClick={() => setOpen(prev => !prev)}
+        aria-label='Item actions'
       >
         <IconDots size={24} />
       </ActionIcon>
 
-      {open ? (
+      {open && (
         <Paper
           withBorder
           shadow='md'
@@ -45,32 +50,26 @@ export const FolderActions = ({ item, options }: IProps) => {
           style={{
             position: 'absolute',
             right: 0,
-            minWidth: 180,
             top: '100%',
-            zIndex: 999999,
-            background: 'white',
+            minWidth: 180,
+            zIndex: 1000,
           }}
         >
-          {options.map((option: any, index: number) => {
-            return (
-              <Text
-                key={index}
-                size='sm'
-                style={{
-                  cursor: 'pointer',
-                  padding: 4,
-                }}
-                onClick={() => {
-                  option.onClick(item);
-                  setOpen(false);
-                }}
-              >
-                {option.label}
-              </Text>
-            );
-          })}
+          {options.map(option => (
+            <Text
+              key={option.label}
+              size='sm'
+              style={{ cursor: 'pointer', padding: 4 }}
+              onClick={() => {
+                option.onClick(item);
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </Text>
+          ))}
         </Paper>
-      ) : null}
+      )}
     </div>
   );
 };

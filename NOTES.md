@@ -39,3 +39,7 @@ small note: Used npm instead of pnpm as my current version is older so did not w
 - added helper function for formatting date and time with Day js
 
 - added optional chainings for data
+
+5. **FolderActions**
+
+- for FolderActions I fixed a memory leak caused by an effect without dependencies and ensured the event listener is properly cleaned up.
