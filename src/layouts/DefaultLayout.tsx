@@ -24,7 +24,7 @@ export const Sidebar = () => {
           const isActive = location.pathname === path;
 
           return (
-            <Button component={NavLink} to={path} variant={isActive ? 'filled' : 'default'}>
+            <Button key={path} component={NavLink} to={path} variant={isActive ? 'filled' : 'default'}>
               {label}
             </Button>
           );
